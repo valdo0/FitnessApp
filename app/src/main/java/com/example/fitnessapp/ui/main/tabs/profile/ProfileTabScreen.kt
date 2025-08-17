@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +37,6 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
             placeholderResId = R.drawable.profile_placeholder,
             imageSize = 120.dp,
             borderWidth = 3.dp,
-            borderColor = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -45,7 +46,6 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = "usuario@example.com",
@@ -53,8 +53,45 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(32.dp))
+        Button(
+            onClick = {
+                navController.navigate("login_screen") {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            },
+            modifier = Modifier.padding(bottom = 8.dp)
+                .fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
+            colors =  ButtonDefaults.buttonColors(
+                containerColor =  MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+            )
 
+        ) {
+            Text(text = "Editar Perfil")
+        }
+        Button(
+            onClick = {
+                navController.navigate("login_screen") {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            },
+            modifier = Modifier.padding(bottom = 8.dp)
+                .fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
+            colors =  ButtonDefaults.buttonColors(
+                containerColor =  MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+            )
+
+        ) {
+            Text(text = "Ajustes")
+        }
         Button(
             onClick = {
                 navController.navigate("login_screen") {
@@ -65,6 +102,12 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
                 }
             },
             modifier = Modifier.padding(bottom = 16.dp)
+                .fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
+            colors =  ButtonDefaults.buttonColors(
+                containerColor =  MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+            )
+
         ) {
             Text(text = "Cerrar Sesión")
         }
