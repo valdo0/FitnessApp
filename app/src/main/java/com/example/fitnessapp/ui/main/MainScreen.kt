@@ -1,5 +1,9 @@
 package com.example.fitnessapp.ui.main
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,6 +18,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import androidx.navigation.compose.composable
+import com.example.fitnessapp.ui.main.tabs.favorite.FavoriteTabScreen
 import com.example.fitnessapp.ui.main.tabs.home.HomeTabScreen
 import com.example.fitnessapp.ui.main.tabs.profile.ProfileTabScreen
 import com.example.fitnessapp.ui.navigation.AppScreens
@@ -85,11 +90,23 @@ fun MainScreen(modifier: Modifier = Modifier,mainNavController: NavHostControlle
         NavHost(
             navController = bottomBarNavController,
             startDestination = AppScreens.HomeTab.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            enterTransition = {
+                slideInHorizontally(initialOffsetX = { 1000 }) + fadeIn(initialAlpha = 0.1f)
+            },
+            exitTransition = {
+                slideOutHorizontally(targetOffsetX = { -1000 }) + fadeOut(targetAlpha = 0.1f)
+            },
+            popEnterTransition = {
+                slideInHorizontally(initialOffsetX = { -1000 }) + fadeIn(initialAlpha = 0.1f)
+            },
+            popExitTransition = {
+                slideOutHorizontally(targetOffsetX = { 1000 }) + fadeOut(targetAlpha = 0.1f)
+            }
         ) {
             composable(AppScreens.HomeTab.route) { HomeTabScreen() }
             composable(AppScreens.ProfileTab.route) { ProfileTabScreen(navController = mainNavController) }
-            composable(AppScreens.FavTab.route){}
+            composable(AppScreens.FavTab.route){ FavoriteTabScreen() }
             composable(AppScreens.RecipeTab.route){}
 
         }
