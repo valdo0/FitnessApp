@@ -28,20 +28,12 @@ fun CircularProfileImage(
     placeholderResId: Int? = R.drawable.profile_placeholder,
     imageSize: Dp = 96.dp,
     borderWidth: Dp = 2.dp,
-    borderColor: Color = MaterialTheme.colorScheme.primary
 ) {
     Box(
         modifier = modifier
             .size(imageSize)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .then(
-                if (borderWidth > 0.dp) {
-                    Modifier.border(borderWidth, borderColor, CircleShape)
-                } else {
-                    Modifier
-                }
-            )
     ) {
         if (imageUrl != null) {
             AsyncImage(
@@ -75,7 +67,6 @@ fun CircularProfileImagePreviewDrawable() {
             placeholderResId = R.drawable.profile_placeholder,
             imageSize = 100.dp,
             borderWidth = 3.dp,
-            borderColor = Color.Magenta
         )
     }
 }
@@ -85,11 +76,10 @@ fun CircularProfileImagePreviewDrawable() {
 fun CircularProfileImagePreviewUrl() {
     MaterialTheme {
         CircularProfileImage(
-            // Reemplaza con una URL real para probar
             imageUrl = "https://via.placeholder.com/150",
             placeholderResId = R.drawable.profile_placeholder,
             imageSize = 80.dp,
-            borderWidth = 0.dp // Sin borde
+            borderWidth = 0.dp
         )
     }
 }
@@ -103,7 +93,6 @@ fun CircularProfileImagePreviewEmpty() {
             placeholderResId = null,
             imageSize = 60.dp,
             borderWidth = 2.dp,
-            borderColor = Color.Green
         )
     }
 }
