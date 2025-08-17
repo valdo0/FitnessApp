@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 open class AppScreens (val route:String) {
     object LoginScreen : AppScreens("login_screen")
     object RegisterScreen : AppScreens("register_screen")
+
+    object RecoverPasswordScreen: AppScreens("recover_screen")
     object MainScreen : AppScreens("main_screen")
     object HomeTab : AppScreens("home_tab_screen")
     object ProfileTab : AppScreens("profile_tab_screen")
