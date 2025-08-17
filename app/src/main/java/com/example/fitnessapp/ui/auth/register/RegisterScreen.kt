@@ -62,7 +62,7 @@ fun RegisterScreen(navController: NavController){
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
@@ -79,7 +79,7 @@ fun RegisterScreen(navController: NavController){
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Confirmar Password") },
+            label = { Text("Confirmar Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
