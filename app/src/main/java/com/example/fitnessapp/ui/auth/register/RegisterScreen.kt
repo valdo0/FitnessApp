@@ -14,6 +14,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,11 +30,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fitnessapp.ui.theme.FitnessAppTheme
 
 @Composable
-fun RegisterScreen(navController: NavController){
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-
+fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+    val state by viewModel.uiState.collectAsState()
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -41,11 +39,11 @@ fun RegisterScreen(navController: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text("FitnessApp Register", style = MaterialTheme.typography.headlineMedium)
+        Text("Registrarse", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(32.dp))
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = state.email,
+            onValueChange = { viewModel.onEmailChange(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
@@ -60,8 +58,8 @@ fun RegisterScreen(navController: NavController){
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = state.password,
+            onValueChange = { viewModel.onPasswordChange(it) },
             label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
@@ -77,8 +75,8 @@ fun RegisterScreen(navController: NavController){
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = state.confirmPassword,
+            onValueChange = { viewModel.onConfirmPasswordChange(it)},
             label = { Text("Confirmar Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
@@ -95,7 +93,7 @@ fun RegisterScreen(navController: NavController){
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                navController.navigate("login_screen")
+                viewModel.register()
             },
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium
@@ -105,6 +103,19 @@ fun RegisterScreen(navController: NavController){
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { navController.navigate("login_screen") }) {
             Text("¿Ya tienes cuenta? Iniciar Sesion")
+        }
+
+        if(state.errorMessage != null){
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(state.errorMessage!!,color = Color.Red)
+        }
+        if(state.isRegistered){
+            navController.navigate("login_screen"){
+                popUpTo("register_screen"){
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
         }
     }
 }

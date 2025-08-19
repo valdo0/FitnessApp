@@ -15,6 +15,8 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,9 +33,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fitnessapp.ui.theme.FitnessAppTheme
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginScreen(navController: NavController,viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+    val state by viewModel.uiState.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,8 +45,8 @@ fun LoginScreen(navController: NavController) {
         Text("Bienvenido", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(32.dp))
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = state.email,
+            onValueChange = { viewModel.onEmailChange(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
@@ -60,8 +61,8 @@ fun LoginScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = state.password,
+            onValueChange = { viewModel.onPasswordChange(it) },
             label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth() ,
@@ -81,13 +82,7 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(32.dp))
         Button(
             onClick = {
-                navController.navigate("main_screen"){
-                    popUpTo("login_screen"){
-                        inclusive = true
-                    }
-                    launchSingleTop=true
-                }
-
+                viewModel.login()
                       },
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium
@@ -96,6 +91,17 @@ fun LoginScreen(navController: NavController) {
         }
         TextButton(onClick = { navController.navigate("register_screen") }) {
             Text("¿Aun no tienes una cuenta? Registrate")
+        }
+        if (state.errorMessage != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(state.errorMessage!!, color = Color.Red)
+        }
+        if (state.isLoggedIn) {
+            LaunchedEffect(Unit) {
+                navController.navigate("main_screen") {
+                    popUpTo("login_screen") { inclusive = true }
+                }
+            }
         }
     }
 }

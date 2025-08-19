@@ -56,12 +56,7 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
         Spacer(modifier = Modifier.height(32.dp))
         Button(
             onClick = {
-                navController.navigate("login_screen") {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
+
             },
             modifier = Modifier.padding(bottom = 8.dp)
                 .fillMaxWidth(),
@@ -75,12 +70,7 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
         }
         Button(
             onClick = {
-                navController.navigate("login_screen") {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
+
             },
             modifier = Modifier.padding(bottom = 8.dp)
                 .fillMaxWidth(),

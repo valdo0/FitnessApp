@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,8 +37,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fitnessapp.ui.theme.FitnessAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecoverPasswordScreen(navController: NavController){
-    var email by remember { mutableStateOf("") }
+fun RecoverPasswordScreen(navController: NavController, viewModel: RecoverPasswordViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+    val state by viewModel.uiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold (
@@ -83,8 +84,8 @@ fun RecoverPasswordScreen(navController: NavController){
                 text = "Escribe tu email para que puedas recibir un codigo para recuperar tu contraseña"
             )
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.email,
+                onValueChange = { viewModel.onEmailChange(it) },
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -100,7 +101,7 @@ fun RecoverPasswordScreen(navController: NavController){
             Spacer(modifier = Modifier.height(24.dp))
             Button(
                 onClick = {
-
+                    viewModel.recoverPassword()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium
