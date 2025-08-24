@@ -1,6 +1,8 @@
 package com.example.fitnessapp.ui.auth.login
 
-import androidx.compose.animation.core.copy
+
+import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,18 +20,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.fitnessapp.R
 import com.example.fitnessapp.ui.theme.FitnessAppTheme
 
 @Composable
@@ -38,16 +40,21 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(20.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text("Bienvenido", style = MaterialTheme.typography.headlineMedium)
+        Image(
+            painter = painterResource(id = R.drawable.logo_fiteats),
+            contentDescription = "Logo",
+            modifier = Modifier.height(200.dp)
+        )
+        Text("Bienvenido", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(32.dp))
         OutlinedTextField(
             value = state.email,
             onValueChange = { viewModel.onEmailChange(it) },
-            label = { Text("Email") },
+            label = { Text("Correo Electronico", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold) },
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
@@ -63,7 +70,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
         OutlinedTextField(
             value = state.password,
             onValueChange = { viewModel.onPasswordChange(it) },
-            label = { Text("Password") },
+            label = { Text("Contraseña", color = MaterialTheme.colorScheme.primary , fontSize = MaterialTheme.typography.bodyLarge.fontSize, fontWeight = FontWeight.Bold) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth() ,
             colors = OutlinedTextFieldDefaults.colors(
@@ -77,7 +84,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             )
         )
         TextButton(onClick = { navController.navigate("recover_screen") }) {
-            Text("¿Olvidaste tu contraseña?")
+            Text("¿Olvidaste tu contraseña?", fontSize = MaterialTheme.typography.bodyLarge.fontSize, fontWeight = FontWeight.Bold)
         }
         Spacer(modifier = Modifier.height(32.dp))
         Button(
@@ -87,14 +94,17 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium
         ) {
-            Text("Login")
+            Text("Login",color = MaterialTheme.colorScheme.onSecondary,fontSize = MaterialTheme.typography.bodyLarge.fontSize)
         }
         TextButton(onClick = { navController.navigate("register_screen") }) {
-            Text("¿Aun no tienes una cuenta? Registrate")
+            Text("¿Aun no tienes una cuenta? Registrate",fontSize = MaterialTheme.typography.bodyLarge.fontSize, fontWeight = FontWeight.Bold)
         }
-        if (state.errorMessage != null) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(state.errorMessage!!, color = Color.Red)
+        val context = LocalContext.current
+        LaunchedEffect(state.errorMessage) {
+            state.errorMessage?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
+            viewModel.clearErrorMessage()
         }
         if (state.isLoggedIn) {
             LaunchedEffect(Unit) {
