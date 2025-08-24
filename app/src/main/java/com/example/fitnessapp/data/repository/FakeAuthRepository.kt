@@ -6,8 +6,11 @@ import java.util.UUID
 
 object FakeAuthRepository : AuthRepository {
 
-    private val users = mutableMapOf<String, String>() // email -> password
+    private val users = mutableMapOf<String, String>()
     private var currentUser: User? = null
+    init{
+        users["admin@admin.cl"] = "password123"
+    }
 
     override suspend fun login(email: String, password: String): Result<User> {
         val storedPassword = users[email]
