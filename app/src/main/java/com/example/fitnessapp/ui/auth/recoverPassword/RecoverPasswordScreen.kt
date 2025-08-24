@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -74,7 +75,7 @@ fun RecoverPasswordScreen(navController: NavController, viewModel: RecoverPasswo
         ) {
             Text(
                 text = "¿Olvidaste tu contraseña?",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -82,11 +83,13 @@ fun RecoverPasswordScreen(navController: NavController, viewModel: RecoverPasswo
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Escribe tu email para que puedas recibir un codigo para recuperar tu contraseña"
+                        ,fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                , fontWeight = FontWeight.Bold
             )
             OutlinedTextField(
                 value = state.email,
                 onValueChange = { viewModel.onEmailChange(it) },
-                label = { Text("Email") },
+                label = { Text("Email", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
@@ -106,7 +109,7 @@ fun RecoverPasswordScreen(navController: NavController, viewModel: RecoverPasswo
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium
             ) {
-                Text("Enviar enlace de recuperación ")
+                Text("Enviar enlace de recuperación ",color = MaterialTheme.colorScheme.onSecondary,fontSize = MaterialTheme.typography.bodyLarge.fontSize)
             }
         }
     }
