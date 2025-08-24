@@ -62,11 +62,11 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
                 .fillMaxWidth(),
             shape = MaterialTheme.shapes.medium,
             colors =  ButtonDefaults.buttonColors(
-                containerColor =  MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                containerColor =  MaterialTheme.colorScheme.primary
             )
 
         ) {
-            Text(text = "Editar Perfil")
+            Text(text = "Editar Perfil",color = MaterialTheme.colorScheme.onSecondary)
         }
         Button(
             onClick = {
@@ -76,11 +76,11 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
                 .fillMaxWidth(),
             shape = MaterialTheme.shapes.medium,
             colors =  ButtonDefaults.buttonColors(
-                containerColor =  MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                containerColor =  MaterialTheme.colorScheme.primary,
             )
 
         ) {
-            Text(text = "Ajustes")
+            Text(text = "Ajustes",color = MaterialTheme.colorScheme.onSecondary)
         }
         Button(
             onClick = {
@@ -95,11 +95,11 @@ fun ProfileTabScreen(modifier: Modifier = Modifier, navController: NavHostContro
                 .fillMaxWidth(),
             shape = MaterialTheme.shapes.medium,
             colors =  ButtonDefaults.buttonColors(
-                containerColor =  MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                containerColor =  MaterialTheme.colorScheme.primary,
             )
 
         ) {
-            Text(text = "Cerrar Sesión")
+            Text(text = "Cerrar Sesión",color = MaterialTheme.colorScheme.onSecondary)
         }
     }
 }

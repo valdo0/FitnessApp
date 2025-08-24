@@ -37,20 +37,20 @@ private val LightColors = lightColorScheme(
 )
 
 private val DarkColors = darkColorScheme(
-    primary = GreenPrimary,
-    onPrimary = WhiteText,
-    primaryContainer = PurpleGrey40,
-    onPrimaryContainer = Purple80,
-    secondary = DarkGreen,
-    onSecondary = WhiteText,
-    tertiary = Pink40,
-    onTertiary = Pink80,
-    background = Color(0xFF1C1B1F),
-    onBackground = Color(0xFFE6E1E5),
-    surface = Color(0xFF1C1B1F),
-    onSurface = Color(0xFFE6E1E5),
-    error = Color(0xFFCF6679),
-    onError = Color(0xFF000000)
+    primary = GreenPrimary,               // Color principal (ej. fondo de botones principales)
+    onPrimary = DarkGreyText,                // Color del contenido sobre el primario (ej. texto en botones principales)
+    primaryContainer = PurpleGrey80,      // Un contenedor acentuado con el color primario
+    onPrimaryContainer = Purple40,        // Contenido sobre primaryContainer
+    secondary = DarkGreen,                // Color secundario (ej. para FABs, elementos destacados)
+    onSecondary = WhiteText,              // Contenido sobre el secundario
+    tertiary = Pink80,                    // Color terciario (para acentos menos prominentes)
+    onTertiary = Pink40,                  // Contenido sobre el terciario
+    background = LightGrey,               // Color de fondo de la mayoría de las pantallas
+    onBackground = DarkGreyText,          // Color del contenido sobre el fondo
+    surface = LightGrey,                  // Color de superficie de componentes como Card, Menu
+    onSurface = DarkGreyText,             // Color del contenido sobre las superficies
+    error = ErrorRed,                     // Color para indicar errores
+    onError = WhiteText,                  // Contenido sobre el color de error
 )
 
 @Composable

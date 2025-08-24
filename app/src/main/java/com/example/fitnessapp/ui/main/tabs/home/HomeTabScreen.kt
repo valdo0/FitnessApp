@@ -38,7 +38,7 @@ fun HomeTabScreen(modifier: Modifier = Modifier) {
         ) {
             items(sampleRecipes, key = { recipe -> recipe.id }) { recipeItem ->
                 CardRecite(
-                    modifier = Modifier.width(280.dp),
+                    modifier = Modifier.width(220.dp).height(400.dp),
                     title = recipeItem.title,
                     subtitle = recipeItem.subtitle,
                     imageUrl = recipeItem.imageUrl,

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -43,10 +45,11 @@ fun CardRecite(
         onClick = onClick,
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-        containerColor = Color.Transparent
+        containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
         Column (
+            modifier = modifier.fillMaxWidth()
         ){
 
             if (imageUrl != null || placeholderResId != null) {
@@ -58,7 +61,7 @@ fun CardRecite(
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .aspectRatio(16f / 9f)
+                                .aspectRatio(4f / 5f)
                                 .clip(MaterialTheme.shapes.medium)
                         )
                     }
@@ -67,14 +70,14 @@ fun CardRecite(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(imageUrl)
                             .crossfade(true)
-                            .placeholder(placeholderResId ?: R.drawable.profile_placeholder)
-                            .error(placeholderResId ?: R.drawable.profile_placeholder)
+                            .placeholder(placeholderResId ?: R.drawable.placeholder_food)
+                            .error(placeholderResId ?: R.drawable.placeholder_food)
                             .build(),
                         contentDescription = title,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .aspectRatio(12f / 17f)
+                            .aspectRatio(4f / 5f)
                             .clip(MaterialTheme.shapes.medium)
                     )
                 }
@@ -86,13 +89,16 @@ fun CardRecite(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    fontWeight = FontWeight.Bold
                 )
                 if (subtitle != null) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = subtitle,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        style = MaterialTheme.typography.bodyLarge ,
+                        color = MaterialTheme.colorScheme.onSecondary,
+
                     )
                 }
             }
