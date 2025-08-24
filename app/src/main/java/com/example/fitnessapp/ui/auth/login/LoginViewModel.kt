@@ -32,6 +32,9 @@ class LoginViewModel(
         _uiState.value = _uiState.value.copy(password = password)
 
     }
+    fun clearErrorMessage() {
+        _uiState.value = _uiState.value.copy(errorMessage = null)
+    }
     fun login() {
         viewModelScope.launch {
             val state = _uiState.value
