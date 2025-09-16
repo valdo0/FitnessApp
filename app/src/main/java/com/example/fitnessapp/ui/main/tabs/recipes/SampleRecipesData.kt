@@ -3,7 +3,7 @@ package com.example.fitnessapp.ui.main.tabs.recipes
 import com.example.fitnessapp.R
 import com.example.fitnessapp.data.model.RecipeItem
 
-val sampleRecipes = listOf(
+val sampleRecipes = mutableListOf(
     RecipeItem(
         id = "1",
         title = "Ensalada quinoa con palta",

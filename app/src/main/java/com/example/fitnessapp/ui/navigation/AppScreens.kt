@@ -17,6 +17,10 @@ open class AppScreens (val route:String) {
     object ProfileTab : AppScreens("profile_tab_screen")
     object RecipeTab : AppScreens("recipe_tab_screen")
     object FavTab : AppScreens("fav_tab_screen")
+    object CalculatorTab : AppScreens("calculator_tab_screen")
+    object FoodTrackerTab : AppScreens("food_tracker_tab_screen")
+    object SearchTab : AppScreens("search_tab_screen")
+    object DetailScreen : AppScreens("detail_screen")
 }
 data class BottomNavItem(
     val label: String,
@@ -36,6 +40,11 @@ val bottomNavItems = listOf(
         route = AppScreens.RecipeTab.route
     ),
     BottomNavItem(
+        label = "Búsqueda",
+        icon = Icons.Outlined.Create,
+        route = AppScreens.SearchTab.route
+    ),
+    BottomNavItem(
         label = "Favoritos",
         icon = Icons.Outlined.FavoriteBorder,
         route = AppScreens.FavTab.route
@@ -45,4 +54,16 @@ val bottomNavItems = listOf(
         icon = Icons.Outlined.Person,
         route = AppScreens.ProfileTab.route
     ),
+    BottomNavItem(
+        label = "Gasto Energético",
+        icon = Icons.Outlined.Create,
+        route = AppScreens.CalculatorTab.route
+    ),
+    BottomNavItem(
+        label = "Registro Calorías",
+        icon = Icons.Outlined.Create,
+        route = AppScreens.FoodTrackerTab.route
+    )
+
+
 )

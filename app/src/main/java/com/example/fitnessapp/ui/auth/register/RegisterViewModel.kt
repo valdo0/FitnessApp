@@ -63,6 +63,7 @@ class RegisterViewModel(
     fun clearRegistrationError() {
         _uiState.value = _uiState.value.copy(registrationError = null)
     }
+
     fun register() {
         if(!validateInput()){
             return

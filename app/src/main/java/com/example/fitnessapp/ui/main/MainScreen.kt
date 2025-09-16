@@ -21,11 +21,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import androidx.navigation.navArgument
+import com.example.fitnessapp.ui.main.tabs.calculator.CalculatorTabScreen
+import com.example.fitnessapp.ui.main.tabs.detail.DetailScreen
 import com.example.fitnessapp.ui.main.tabs.favorite.FavoriteTabScreen
+import com.example.fitnessapp.ui.main.tabs.foodTracker.FoodTrackerScreen
 import com.example.fitnessapp.ui.main.tabs.home.HomeTabScreen
 import com.example.fitnessapp.ui.main.tabs.profile.ProfileTabScreen
 import com.example.fitnessapp.ui.main.tabs.recipes.RecipeTabScreen
+import com.example.fitnessapp.ui.main.tabs.search.SearchTabScreen
 import com.example.fitnessapp.ui.navigation.AppScreens
 import com.example.fitnessapp.ui.navigation.bottomNavItems
 import com.example.fitnessapp.ui.theme.FitnessAppTheme
@@ -122,9 +128,20 @@ fun MainScreen(modifier: Modifier = Modifier, mainNavController: NavHostControll
                 }
             ) {
                 composable(AppScreens.HomeTab.route) { HomeTabScreen() }
-                composable(AppScreens.ProfileTab.route) { ProfileTabScreen(navController = mainNavController) }
+                composable(AppScreens.ProfileTab.route) { ProfileTabScreen(navController = drawerNavController) }
                 composable(AppScreens.FavTab.route) { FavoriteTabScreen() }
+                composable(AppScreens.SearchTab.route) { SearchTabScreen(navController = drawerNavController) }
                 composable(AppScreens.RecipeTab.route) { RecipeTabScreen() }
+                composable (AppScreens.CalculatorTab.route ){ CalculatorTabScreen() }
+                composable (AppScreens.FoodTrackerTab.route){ FoodTrackerScreen() }
+                composable(
+                    route = AppScreens.DetailScreen.route + "/{recipeId}",
+                    arguments = listOf(navArgument("recipeId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val recipeId = backStackEntry.arguments?.getString("recipeId")
+                    DetailScreen(recipeId = recipeId,drawerNavController)
+                }
+
             }
         }
     }

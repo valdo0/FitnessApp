@@ -4,7 +4,7 @@ package com.example.fitnessapp.ui.main.tabs.favorite
 import com.example.fitnessapp.R
 import com.example.fitnessapp.data.model.RecipeItem
 
-val sampleFavouritesRecipes = listOf(
+val sampleFavouritesRecipes = mutableListOf(
     RecipeItem(
         id = "1",
         title = "Ensalada quinoa con palta",
