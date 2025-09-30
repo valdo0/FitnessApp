@@ -1,7 +1,9 @@
 package com.example.fitnessapp.ui.auth.login
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitnessapp.data.RegisterDbHelper
 import com.example.fitnessapp.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,10 +20,9 @@ data class LoginUiState(
 )
 
 class LoginViewModel(
-    private val authRepository: AuthRepository = FakeAuthRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(LoginUiState())
 
+    private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun onEmailChange(email: String) {
@@ -30,29 +31,33 @@ class LoginViewModel(
 
     fun onPasswordChange(password: String) {
         _uiState.value = _uiState.value.copy(password = password)
-
     }
+
     fun clearErrorMessage() {
         _uiState.value = _uiState.value.copy(errorMessage = null)
     }
-    fun login() {
-        viewModelScope.launch {
-            val state = _uiState.value
-            _uiState.value = state.copy(isLoading = true, errorMessage = null)
 
-            val result = authRepository.login(state.email, state.password)
+    fun login(context: Context) {
+        val state = _uiState.value
 
-            _uiState.value = result.fold(
-                onSuccess = { state.copy(isLoading = false, isLoggedIn = true) },
-                onFailure = { state.copy(isLoading = false, errorMessage = it.message) }
-            )
+        if (state.email.isBlank() || state.password.isBlank()) {
+            _uiState.value = state.copy(errorMessage = "Email y contraseña son requeridos")
+            return
+        }
+
+        _uiState.value = state.copy(isLoading = true, errorMessage = null)
+
+        RegisterDbHelper.login(context, state.email, state.password) { result ->
+            // Este callback se ejecuta en el MainThread
+            _uiState.value = if (result.ok) {
+                state.copy(isLoading = false, isLoggedIn = true)
+            } else {
+                state.copy(isLoading = false, errorMessage = result.mensaje)
+            }
         }
     }
+
     fun logout() {
-        viewModelScope.launch {
-            authRepository.logout()
-            _uiState.value = LoginUiState()
-        }
+        _uiState.value = LoginUiState()
     }
-
 }

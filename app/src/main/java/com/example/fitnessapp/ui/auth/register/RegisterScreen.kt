@@ -36,6 +36,7 @@ import com.example.fitnessapp.ui.theme.FitnessAppTheme
 @Composable
 fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -118,7 +119,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                viewModel.register()
+                viewModel.register(context)
             },
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium

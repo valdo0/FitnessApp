@@ -37,6 +37,7 @@ import com.example.fitnessapp.ui.theme.FitnessAppTheme
 @Composable
 fun LoginScreen(navController: NavController,viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,7 +90,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
         Spacer(modifier = Modifier.height(32.dp))
         Button(
             onClick = {
-                viewModel.login()
+                viewModel.login(context)
                       },
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium
